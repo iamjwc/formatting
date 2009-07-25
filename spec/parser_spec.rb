@@ -5,10 +5,6 @@ describe ParserParser do
     @p = ParserParser.new
   end
 
-  after do
-    puts @p.failure_reason if @p.failure_reason
-  end
-
   def parsed_as_entire_statement?(text)
     @p.parse(text).elements[0].text_value == text
   end
@@ -23,12 +19,17 @@ describe ParserParser do
     parsed_as_entire_statement?("[[  name]]").should be_true
   end
 
-  it "should be able to parse simple statement with padding" do
+  it "should be able to parse simple statement with width" do
     parsed_as_entire_statement?("[[name 80]]").should be_true
     parsed_as_entire_statement?("[[name 4]]").should be_true
   end
 
-  it "should not be able to parse simple statement with negative padding" do
+  it "should not be able to parse simple statement with width and no field" do
+    parsed_as_entire_statement?("[[80]]").should be_false
+    parsed_as_entire_statement?("[[4]]").should be_false
+  end
+
+  it "should not be able to parse simple statement with negative width" do
     parsed_as_entire_statement?("[[name -80]]").should be_false
     parsed_as_entire_statement?("[[name -4]]").should be_false
   end

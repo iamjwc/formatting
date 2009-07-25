@@ -4,11 +4,11 @@ grammar Parser
   end
 
   rule statement
-    open_brackets space field_name space (padding)? space close_brackets
+    open_brackets space field_name space width space close_brackets
   end
 
-  rule padding
-    number
+  rule width
+    number?
   end
 
   rule number
@@ -16,7 +16,7 @@ grammar Parser
   end
 
   rule field_name
-    [\w]+
+    [_a-zA-Z] [\w]*
   end
 
   rule open_brackets

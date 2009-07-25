@@ -69,6 +69,10 @@ module Parser
       elements[3]
     end
 
+    def width
+      elements[4]
+    end
+
     def space
       elements[5]
     end
@@ -99,19 +103,14 @@ module Parser
           r4 = _nt_space
           s0 << r4
           if r4
-            r6 = _nt_padding
-            if r6
-              r5 = r6
-            else
-              r5 = instantiate_node(SyntaxNode,input, index...index)
-            end
+            r5 = _nt_width
             s0 << r5
             if r5
-              r7 = _nt_space
-              s0 << r7
-              if r7
-                r8 = _nt_close_brackets
-                s0 << r8
+              r6 = _nt_space
+              s0 << r6
+              if r6
+                r7 = _nt_close_brackets
+                s0 << r7
               end
             end
           end
@@ -131,17 +130,22 @@ module Parser
     r0
   end
 
-  def _nt_padding
+  def _nt_width
     start_index = index
-    if node_cache[:padding].has_key?(index)
-      cached = node_cache[:padding][index]
+    if node_cache[:width].has_key?(index)
+      cached = node_cache[:width][index]
       @index = cached.interval.end if cached
       return cached
     end
 
-    r0 = _nt_number
+    r1 = _nt_number
+    if r1
+      r0 = r1
+    else
+      r0 = instantiate_node(SyntaxNode,input, index...index)
+    end
 
-    node_cache[:padding][start_index] = r0
+    node_cache[:width][start_index] = r0
 
     r0
   end
@@ -196,6 +200,9 @@ module Parser
     r0
   end
 
+  module FieldName0
+  end
+
   def _nt_field_name
     start_index = index
     if node_cache[:field_name].has_key?(index)
@@ -204,25 +211,38 @@ module Parser
       return cached
     end
 
-    s0, i0 = [], index
-    loop do
-      if has_terminal?('\G[\\w]', true, index)
-        r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
-        @index += 1
-      else
-        r1 = nil
-      end
-      if r1
-        s0 << r1
-      else
-        break
-      end
+    i0, s0 = index, []
+    if has_terminal?('\G[_a-zA-Z]', true, index)
+      r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
+      @index += 1
+    else
+      r1 = nil
     end
-    if s0.empty?
+    s0 << r1
+    if r1
+      s2, i2 = [], index
+      loop do
+        if has_terminal?('\G[\\w]', true, index)
+          r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
+        else
+          r3 = nil
+        end
+        if r3
+          s2 << r3
+        else
+          break
+        end
+      end
+      r2 = instantiate_node(SyntaxNode,input, i2...index, s2)
+      s0 << r2
+    end
+    if s0.last
+      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
+      r0.extend(FieldName0)
+    else
       @index = i0
       r0 = nil
-    else
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
     end
 
     node_cache[:field_name][start_index] = r0
