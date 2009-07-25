@@ -1,0 +1,66 @@
+grammar Parser
+  rule statements
+    (non_open_bracket / statement / .)*
+  end
+
+  rule statement
+    open_brackets space field_name space (padding)? space close_brackets
+  end
+
+  rule padding
+    number
+  end
+
+  rule number
+    [1-9] [0-9]*
+  end
+
+  rule field_name
+    [\w]+
+  end
+
+  rule open_brackets
+    open_bracket (beginning_text)? open_bracket
+  end
+
+  rule close_brackets
+    close_bracket (ending_text)? close_bracket
+  end
+
+  rule beginning_text
+    non_open_bracket
+  end
+
+  rule ending_text
+    non_close_bracket
+  end
+
+  rule open_bracket
+    "["
+  end
+
+  rule close_bracket
+    "]"
+  end
+
+  rule escaped_open_bracket
+    '\['
+  end
+
+  rule escaped_close_bracket
+    '\]'
+  end
+
+  rule non_open_bracket
+    (escaped_open_bracket  / !'[' .)+
+  end
+
+  rule non_close_bracket
+    (escaped_close_bracket / !']' .)+
+  end
+
+  rule space
+    [ \n]*
+  end
+end
+
