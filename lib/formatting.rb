@@ -1,7 +1,9 @@
 require 'treetop'
 
-require 'lib/parser'
-require 'lib/formatter'
+$: << File.dirname(__FILE__)
+
+require 'parser'
+require 'formatter'
 
 class Formatting
   def new(code)
