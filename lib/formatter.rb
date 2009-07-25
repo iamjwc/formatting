@@ -32,7 +32,7 @@ class Formatter
 
     value = env[key]
 
-    if value.is_a? Array
+    output = if value.is_a? Array
       if before_text.blank? && end_text.blank? # If there is no separator, use comma by default
         value.join(", ")
       elsif before_text.blank? || end_text.blank?
@@ -41,16 +41,16 @@ class Formatter
         before_text + value.join(end_text + before_text) + end_text
       end
     else
-      if !width.blank?
-        value = wrap_text(value, width.to_i)
-      end
-
       if value.blank?
         ""
       else
         before_text + value + end_text
       end
     end
+
+    output = wrap_text(output, width.to_i) if !width.blank?
+
+    output
   end
 
   # Borrowed from http://blog.macromates.com/2006/wrapping-text-with-regular-expressions/
