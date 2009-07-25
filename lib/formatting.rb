@@ -6,7 +6,7 @@ require 'parser'
 require 'formatter'
 
 class Formatting
-  def new(code)
+  def initialize(code)
     @p = ParserParser.new.parse(code)
     @f = Formatter.new
   end
