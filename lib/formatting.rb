@@ -6,12 +6,12 @@ require 'parser'
 require 'formatter'
 
 class Formatting
-  def initialize(code)
-    @p = ParserParser.new.parse(code)
-    @f = Formatter.new
+  def initialize(env)
+    @p = ParserParser.new
+    @f = Formatter.new(env)
   end
 
-  def format(env)
-    @f.format(@p, env)
+  def format(code)
+    @f.format(@p.parse(code))
   end
 end

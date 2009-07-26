@@ -212,7 +212,7 @@ module Parser
     end
 
     i0, s0 = index, []
-    if has_terminal?('\G[_a-zA-Z]', true, index)
+    if has_terminal?('\G[:_a-zA-Z]', true, index)
       r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -222,7 +222,7 @@ module Parser
     if r1
       s2, i2 = [], index
       loop do
-        if has_terminal?('\G[\\w]', true, index)
+        if has_terminal?('\G[:\\w]', true, index)
           r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else

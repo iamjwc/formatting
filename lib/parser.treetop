@@ -16,7 +16,7 @@ grammar Parser
   end
 
   rule field_name
-    [_a-zA-Z] [\w]*
+    [:_a-zA-Z] [:\w]*
   end
 
   rule open_brackets
