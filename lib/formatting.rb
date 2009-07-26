@@ -6,9 +6,9 @@ require 'parser'
 require 'formatter'
 
 class Formatting
-  def initialize(env)
+  def initialize(env, opts = {})
     @p = ParserParser.new
-    @f = Formatter.new(env)
+    @f = Formatter.new(env, opts)
   end
 
   def format(code)
