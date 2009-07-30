@@ -34,7 +34,7 @@ module Parser
           if r4
             r1 = r4
           else
-            @index = i1
+            self.index = i1
             r1 = nil
           end
         end
@@ -49,7 +49,7 @@ module Parser
 
     node_cache[:statements][start_index] = r0
 
-    r0
+    return r0
   end
 
   module Statement0
@@ -121,13 +121,13 @@ module Parser
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(Statement0)
     else
-      @index = i0
+      self.index = i0
       r0 = nil
     end
 
     node_cache[:statement][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_width
@@ -147,7 +147,7 @@ module Parser
 
     node_cache[:width][start_index] = r0
 
-    r0
+    return r0
   end
 
   module Number0
@@ -162,7 +162,7 @@ module Parser
     end
 
     i0, s0 = index, []
-    if has_terminal?('\G[1-9]', true, index)
+    if input.index(Regexp.new('[1-9]'), index) == index
       r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -172,7 +172,7 @@ module Parser
     if r1
       s2, i2 = [], index
       loop do
-        if has_terminal?('\G[0-9]', true, index)
+        if input.index(Regexp.new('[0-9]'), index) == index
           r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
@@ -191,13 +191,13 @@ module Parser
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(Number0)
     else
-      @index = i0
+      self.index = i0
       r0 = nil
     end
 
     node_cache[:number][start_index] = r0
 
-    r0
+    return r0
   end
 
   module FieldName0
@@ -212,7 +212,7 @@ module Parser
     end
 
     i0, s0 = index, []
-    if has_terminal?('\G[:_a-zA-Z]', true, index)
+    if input.index(Regexp.new('[:_a-zA-Z]'), index) == index
       r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -222,7 +222,7 @@ module Parser
     if r1
       s2, i2 = [], index
       loop do
-        if has_terminal?('\G[:\\w]', true, index)
+        if input.index(Regexp.new('[:\\w]'), index) == index
           r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
@@ -241,13 +241,13 @@ module Parser
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(FieldName0)
     else
-      @index = i0
+      self.index = i0
       r0 = nil
     end
 
     node_cache[:field_name][start_index] = r0
 
-    r0
+    return r0
   end
 
   module OpenBrackets0
@@ -288,13 +288,13 @@ module Parser
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(OpenBrackets0)
     else
-      @index = i0
+      self.index = i0
       r0 = nil
     end
 
     node_cache[:open_brackets][start_index] = r0
 
-    r0
+    return r0
   end
 
   module CloseBrackets0
@@ -335,13 +335,13 @@ module Parser
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(CloseBrackets0)
     else
-      @index = i0
+      self.index = i0
       r0 = nil
     end
 
     node_cache[:close_brackets][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_beginning_text
@@ -356,7 +356,7 @@ module Parser
 
     node_cache[:beginning_text][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_ending_text
@@ -371,7 +371,7 @@ module Parser
 
     node_cache[:ending_text][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_open_bracket
@@ -382,7 +382,7 @@ module Parser
       return cached
     end
 
-    if has_terminal?("[", false, index)
+    if input.index("[", index) == index
       r0 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -392,7 +392,7 @@ module Parser
 
     node_cache[:open_bracket][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_close_bracket
@@ -403,7 +403,7 @@ module Parser
       return cached
     end
 
-    if has_terminal?("]", false, index)
+    if input.index("]", index) == index
       r0 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -413,7 +413,7 @@ module Parser
 
     node_cache[:close_bracket][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_escaped_open_bracket
@@ -424,7 +424,7 @@ module Parser
       return cached
     end
 
-    if has_terminal?('\[', false, index)
+    if input.index('\[', index) == index
       r0 = instantiate_node(SyntaxNode,input, index...(index + 2))
       @index += 2
     else
@@ -434,7 +434,7 @@ module Parser
 
     node_cache[:escaped_open_bracket][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_escaped_close_bracket
@@ -445,7 +445,7 @@ module Parser
       return cached
     end
 
-    if has_terminal?('\]', false, index)
+    if input.index('\]', index) == index
       r0 = instantiate_node(SyntaxNode,input, index...(index + 2))
       @index += 2
     else
@@ -455,7 +455,7 @@ module Parser
 
     node_cache[:escaped_close_bracket][start_index] = r0
 
-    r0
+    return r0
   end
 
   module NonOpenBracket0
@@ -478,7 +478,7 @@ module Parser
       else
         i3, s3 = index, []
         i4 = index
-        if has_terminal?('[', false, index)
+        if input.index('[', index) == index
           r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
@@ -488,7 +488,7 @@ module Parser
         if r5
           r4 = nil
         else
-          @index = i4
+          self.index = i4
           r4 = instantiate_node(SyntaxNode,input, index...index)
         end
         s3 << r4
@@ -506,13 +506,13 @@ module Parser
           r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
           r3.extend(NonOpenBracket0)
         else
-          @index = i3
+          self.index = i3
           r3 = nil
         end
         if r3
           r1 = r3
         else
-          @index = i1
+          self.index = i1
           r1 = nil
         end
       end
@@ -523,7 +523,7 @@ module Parser
       end
     end
     if s0.empty?
-      @index = i0
+      self.index = i0
       r0 = nil
     else
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
@@ -531,7 +531,7 @@ module Parser
 
     node_cache[:non_open_bracket][start_index] = r0
 
-    r0
+    return r0
   end
 
   module NonCloseBracket0
@@ -554,7 +554,7 @@ module Parser
       else
         i3, s3 = index, []
         i4 = index
-        if has_terminal?(']', false, index)
+        if input.index(']', index) == index
           r5 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
@@ -564,7 +564,7 @@ module Parser
         if r5
           r4 = nil
         else
-          @index = i4
+          self.index = i4
           r4 = instantiate_node(SyntaxNode,input, index...index)
         end
         s3 << r4
@@ -582,13 +582,13 @@ module Parser
           r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
           r3.extend(NonCloseBracket0)
         else
-          @index = i3
+          self.index = i3
           r3 = nil
         end
         if r3
           r1 = r3
         else
-          @index = i1
+          self.index = i1
           r1 = nil
         end
       end
@@ -599,7 +599,7 @@ module Parser
       end
     end
     if s0.empty?
-      @index = i0
+      self.index = i0
       r0 = nil
     else
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
@@ -607,7 +607,7 @@ module Parser
 
     node_cache[:non_close_bracket][start_index] = r0
 
-    r0
+    return r0
   end
 
   def _nt_space
@@ -620,7 +620,7 @@ module Parser
 
     s0, i0 = [], index
     loop do
-      if has_terminal?('\G[ \\n]', true, index)
+      if input.index(Regexp.new('[ \\n]'), index) == index
         r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -636,7 +636,7 @@ module Parser
 
     node_cache[:space][start_index] = r0
 
-    r0
+    return r0
   end
 
 end
