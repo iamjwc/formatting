@@ -52,7 +52,7 @@ class Formatter
 
     output = wrap_text(output, width.to_i) if !width.blank?
 
-    output.gsub!('\n', "\n").gsub!('\t', "\t")
+    output.to_s.gsub!('\n', "\n").gsub!('\t', "\t")
   end
 
   #First check if the value exists as the key with the default namespace
