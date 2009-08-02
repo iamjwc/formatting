@@ -81,6 +81,11 @@ describe Formatter do
       @f.format(p("[[other:coffee]]")).should == "mug"
       @f.format(p("[[people:name]]")).should == "Justin Camerer"
     end
+
+    it "should convert \\n into a newline char" do
+      @f.format(p('\n')).should == "\n"
+      @f.format(p('my name is\njustin')).should == "my name is\njustin"
+    end
   end
 
   describe Formatting do

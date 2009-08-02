@@ -17,13 +17,15 @@ class Formatter
   end
 
   def format(parse_tree)
-    parse_tree.elements.map do |pt|
+    str = parse_tree.elements.map do |pt|
       if pt.extension_modules.include? Parser::Statement0
         format_statement(pt)
       else
         pt.text_value
       end
     end.join("")
+
+    str.gsub('\n', "\n").gsub('\t', "\t")
   end
 
   def format_statement(pt)
@@ -52,7 +54,7 @@ class Formatter
 
     output = wrap_text(output, width.to_i) if !width.blank?
 
-    output.to_s.gsub!('\n', "\n").gsub!('\t', "\t")
+    output
   end
 
   #First check if the value exists as the key with the default namespace
