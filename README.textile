@@ -1,0 +1,28 @@
+h2. Examples
+
+Using {"name" => "Justin", "middlename" => "", "favoritefoods" => %w{apples oranges pizza}}
+
+h3. Simple variable substitution
+
+bc. [[name]] # => Justin
+
+h3. Pre and Post-text
+
+bc. [Hello, [name]] # => "Hello, Justin"
+[[name] is my name] # => "Justin is my name"
+
+h3. Displays nothing for nonexistent or blank value
+
+bc. [[middlename]] # => ""
+
+h3. Hides Pre and Post-text for nonexistent or blank value
+
+bc. [Hello, [middlename]] # => ""
+
+h3. Joins lists with comma by default
+
+bc. [[favoritefoods]] # => "apples, oranges, pizza"
+
+h3. Custom list join text
+
+bc. <ul>[<li>[favoritefoods]<li>]</ul> # => "<ul><li>apples</li><li>oranges</li><li>pizza</li></ul>"
